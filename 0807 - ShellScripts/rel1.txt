@@ -1,0 +1,101 @@
+EA872#0807-e
+
+Comandos a descobrir:
+	 ps 
+	 sh
+	 grep padrao arquivo
+
+
+INTERPRETAR UM COMANDO `...`
+
+7) Atv Praticas
+
+   
+
+   1: usar comando env
+
+      PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+      Diretórios nos quais o sistema "simula" uma localidade (onipresença)
+
+      PWD=/net/nfs1.fee.unicamp.br/export/vol1/home/EC10/ra104922/Documentos/EA872/0807
+      Diretório atual
+
+      LOGNAME=ra104922 - Usuário atual
+      
+      HOME=/home/EC10/ra104922 - Diretorio raiz (do usuario)
+
+      SHELL=/bin/csh - Interpretador de comandos atual
+
+
+
+      2: ???
+
+
+
+      3: 
+      set x=`pwd`
+      set PATH=($PATH $x)
+      
+
+      4:a
+            Loop  de opçoes: (comparação da variaavel stop = 0 com zero)
+	    à cada iteração:
+	      	   cat << FIMDOMENU ... FIMDOMENU imprime o "hereText"
+            	   do menu na saída padrão
+		   Imprime uma linha em branco
+		   Imprime texto pedindo a opçao escolhida dpelo usuario
+		   le a resposta do usuario e poe na variavel op ( comando read op )
+		   linha em branco
+		   case ("switch") da variavel op. ;; finaliza o caso	    
+		   	    caso 1: comando date imprime a data
+			    caso 2 ou 3) comando pwd imprime diretorio padrao
+			    caso 4) Setar stop=1  (parar o loop)
+			    default) imprimir opçao invalida
+		 esac finaliza o case
+		 done indica o fim do while
+
+
+	4:b
+		Objetivo: Mostrar o calendario do mes: Atual, do mes
+		requisitado este ano ou qualquer outro mês
+
+		** $# conta os parametros
+
+		Caso Sem parametros: Mes atual. Comando 'date'; dá a
+		data com saida suprimida. m e y reterão o mes e o ano
+		impressos. Traduz-se o mês para o portugues com ajuda
+		de um case (uniformização)
+
+		Caso com um parametro: Mes requisitado no ano
+		atual. comandoo date é usado da mesma forma,
+		entretanto apenas y é preenchido
+
+		Mais parametros: Dia e ano fornecidos sao utilizados
+		pelo programa
+
+		Segundo case: Tradução dos meses para formato numerico
+		( Maiusculas/nomes completos/numeros considerados)
+
+		Caso Default: Se o mes nao existe (>12): interpreta-lo
+		como ano e deixar m como string vazia. (causará
+		impressao do calendario anual)
+
+		chamada do script /usr/bin/cal, com m e y como
+		parametros (que calcula realmente os calendarios)
+
+
+	4:c
+		
+
+
+
+
+
+
+
+
+	
+
+      
+      
+
