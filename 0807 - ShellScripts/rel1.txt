@@ -85,6 +85,68 @@ INTERPRETAR UM COMANDO `...`
 
 
 	4:c
+	Analisa o PATH e determina quais caminhos sao arquivos e quais nao existem
+
+	sed: editor de texto via linha de comando
+	      's/:/ /g' é interpretado como o script que será usado pelo sed
+	      s/ = substituiçao usando expressoes regulares
+	      	  sintaxe
+
+		    substituir
+		    ||separador 
+		    ||| ---------> em todas as linhas
+		    ||| ||
+		  's/:/ /g'-----|
+		  |  | |        |
+		  |  | ponha    |
+		  |  procure    |
+		  !interpretar<-|
+
+
+	Para cada diretório no Path (DIRPATH) (separados pelo sed), teste:
+	     Se DIRPATH NAO é um diretório ( [ ... ] depois do if indica teste
+	     	se verdadeiro, teste se um arquivo (-f). 
+		Imprima julgamento (arquivo ou inexistente)
+
+
+	
+
+	4:d
+	Objetivo: Separar linhas da entrada em arquivos. Caso haja uma
+	letra, arquivo 1. Se nao há letras e há números, arquivo
+	2. Outras linhas sao descartadas
+
+	Pte 1: Confere o numero de argumentos passados com $#. Se nao
+	2, explicar funcionamento e sair.
+
+	pte 2: para cada linha, 
+	    incrementar total: (` ` para explicitar o comando e expr
+	    para o calculo matemático)
+	    
+	    analisar o caso (ordem das possibilidades influencia na
+	    preferência). Concatena o conteudo da linha no arquivo
+	    apropriado. <> termina o programa. Caso uma outra linha
+	    nao se encaixe, acrescer 1 em perdido (exatamente como em
+	    total)
+
+
+	4:e
+	
+ 	Pte 1: Caso nao seja passado um argumento, o programa tratará
+ 	do PATH ( variaveis posicionais  setado usando set $PATH)
+ 
+
+
+
+
+
+
+
+
+
+http://www.gnu.org/software/bash/manual/bashref.html
+
+! => Histórico
 		
 
 
