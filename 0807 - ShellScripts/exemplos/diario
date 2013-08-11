@@ -1,7 +1,0 @@
-hoje=`date +%m/%d` 
-# apresenta a data no formato mes/dia 
-case $hoje in 
-03/02) echo "aula de EA878";; 
-03/03) echo "atividades praticas de EA878";;
-*) echo "estudar EA878";; 
-esac
