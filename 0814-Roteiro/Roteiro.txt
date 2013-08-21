@@ -1,0 +1,57 @@
+Roteiro de Instalaçao do Ubuntu 13.04 (raring) na imx-53
+
+1) Baixar:
+   i) Download:
+	wget -c http://rcn-ee.net/deb/minfs/raring/ubuntu-13.04-minimal-armhf-2013-05-05.tar.xz
+
+   ii) Verify:
+	md5sum ubuntu-13.04-minimal-armhf-2013-05-05.tar.xz
+952cf1f87c047653fb0f24818c8bfd26  ubuntu-13.04-minimal-armhf-2013-05-05.tar.xz
+
+
+    iii) Extract:
+	tar xJf ubuntu-13.04-minimal-armhf-2013-05-05.tar.xz
+
+
+2) Setup do Cartão
+   i) Descobrir o endereço para o cartao ( /media/sdX ou /media/mmcblk0 ) e exportar uma referência: export DISK=/media/...
+
+   ii) Apagar SD
+       sudo dd if=/dev/zero of=${DISK} bs=1M count=16
+   
+   iii) Install Bootloader:
+   	sudo dd if=./u-boot/u-boot.imx of=${DISK} bs=512 seek=2
+
+   iv) Create Partitions 
+
+       sudo sfdisk --in-order --Linux --unit M ${DISK} <<-__EOF__
+       1,48,0x83,*
+       ,,,-
+       __EOF__
+
+   v) Format Partitions
+      
+	for: DISK=/dev/mmcblk0
+    	sudo mkfs.ext2 ${DISK}p1 -L boot
+	sudo mkfs.ext4 ${DISK}p2 -L rootfs
+ 
+	for: DISK=/dev/sdX
+	sudo mkfs.ext2 ${DISK}1 -L boot
+	sudo mkfs.ext4 ${DISK}2 -L rootfs
+	
+
+   vi) Mount Partition	     
+	     sudo mkdir -p /media/boot/
+	     sudo mkdir -p /media/rootfs/
+	      
+	     for: DISK=/dev/mmcblk0
+	     sudo mount ${DISK}p1 /media/boot/
+	     sudo mount ${DISK}p2 /media/rootfs/
+	       
+	     for: DISK=/dev/sdX
+	     sudo mount ${DISK}1 /media/boot/
+	     sudo mount ${DISK}2 /media/rootfs/
+   
+
+   
+

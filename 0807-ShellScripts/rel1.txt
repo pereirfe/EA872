@@ -1,0 +1,301 @@
+EA872#0807-e
+
+Comandos a descobrir:
+	 ps 
+	 sh
+	 grep padrao arquivo
+
+
+INTERPRETAR UM COMANDO `...`
+
+7) Atv Praticas
+
+   
+
+   1: usar comando env
+
+      PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+      Diretórios nos quais o sistema "simula" uma localidade (onipresença)
+
+      PWD=/net/nfs1.fee.unicamp.br/export/vol1/home/EC10/ra104922/Documentos/EA872/08
+07
+      Diretório atual
+
+      LOGNAME=ra104922 - Usuário atual
+      
+      HOME=/home/EC10/ra104922 - Diretorio raiz (do usuario)
+
+      SHELL=/bin/csh - Interpretador de comandos atual
+
+
+
+      2: usando find /bin -name "*sh*"
+      	 	/bin/bash
+		/bin/csh
+		/bin/ksh
+		/bin/sh
+		/bin/tcsh
+		/bin/zsh
+
+
+
+      3: 
+      set x=`pwd`
+      set PATH=($PATH $x)
+      
+
+      4:a
+            Loop  de opçoes: (comparação da variaavel stop = 0 com zero)
+	    à cada iteração:
+	      	   cat << FIMDOMENU ... FIMDOMENU imprime o "hereText"
+            	   do menu na saída padrão
+		   Imprime uma linha em branco
+		   Imprime texto pedindo a opçao escolhida dpelo usuario
+		   le a resposta do usuario e poe na variavel op ( comando read op )
+		   linha em branco
+		   case ("switch") da variavel op. ;; finaliza o caso	    
+		   	    caso 1: comando date imprime a data
+			    caso 2 ou 3) comando pwd imprime diretorio padrao
+			    caso 4) Setar stop=1  (parar o loop)
+			    default) imprimir opçao invalida
+		 esac finaliza o case
+		 done indica o fim do while
+
+
+	4:b
+		Objetivo: Mostrar o calendario do mes: Atual, do mes
+		requisitado este ano ou qualquer outro mês
+
+		** $# conta os parametros
+
+		Caso Sem parametros: Mes atual. Comando 'date'; dá a
+		data com saida suprimida. m e y reterão o mes e o ano
+		impressos. Traduz-se o mês para o portugues com ajuda
+		de um case (uniformização)
+
+		Caso com um parametro: Mes requisitado no ano
+		atual. comandoo date é usado da mesma forma,
+		entretanto apenas y é preenchido
+
+		Mais parametros: Dia e ano fornecidos sao utilizados
+		pelo programa
+
+		Segundo case: Tradução dos meses para formato numerico
+		( Maiusculas/nomes completos/numeros considerados)
+
+		Caso Default: Se o mes nao existe (>12): interpreta-lo
+		como ano e deixar m como string vazia. (causará
+		impressao do calendario anual)
+
+		chamada do script /usr/bin/cal, com m e y como
+		parametros (que calcula realmente os calendarios)
+
+
+	4:c
+	Analisa o PATH e determina quais caminhos sao arquivos e quais nao existem
+
+	sed: editor de texto via linha de comando
+	      's/:/ /g' é interpretado como o script que será usado pelo sed
+	      s/ = substituiçao usando expressoes regulares
+	      	  sintaxe
+
+		    substituir
+		    ||separador 
+		    ||| ---------> em todas as linhas
+		    ||| ||
+		  's/:/ /g'-----|
+		  |  | |        |
+		  |  | ponha    |
+		  |  procure    |
+		  !interpretar<-|
+
+
+	Para cada diretório no Path (DIRPATH) (separados pelo sed), teste:
+	     Se DIRPATH NAO é um diretório ( [ ... ] depois do if indica teste
+	     	se verdadeiro, teste se um arquivo (-f). 
+		Imprima julgamento (arquivo ou inexistente)
+
+
+	
+
+	4:d
+	Objetivo: Separar linhas da entrada em arquivos. Caso haja uma
+	letra, arquivo 1. Se nao há letras e há números, arquivo
+	2. Outras linhas sao descartadas
+
+	Pte 1: Confere o numero de argumentos passados com $#. Se nao
+	2, explicar funcionamento e sair.
+
+	pte 2: para cada linha, 
+	    incrementar total: (` ` para explicitar o comando e expr
+	    para o calculo matemático)
+	    
+	    analisar o caso (ordem das possibilidades influencia na
+	    preferência). Concatena o conteudo da linha no arquivo
+	    apropriado. <> termina o programa. Caso uma o
+
+
+utra linha
+	    nao se encaixe, acrescer 1 em perdido (exatamente como em
+	    total)
+
+
+	4:e
+
+	Objetivo: Listar recursivamente todo conteúdo de um diretório,
+	em formato cascata.
+	
+ 	Pte 1: Caso nao seja passado um argumento, o programa tratará
+ 	do PATH ( variaveis posicionais  setado usando set $PATH)
+ 
+	Para cada endereço passado como argumento ($*)
+	     caso comece com '--proof=', cortar o texto por campos
+	     separados por '=' (cut -f -d ) e selecionar o
+	     segundo. Atribuir à profundidade. (Comando interno)
+
+	     caso default:
+	     	  teste se diretório
+	     	  	se sim, sete CONT com a profundidade atual ( ou zero
+	     	  	se nao setada ainda).
+		  	imprime-se espaços proporcionalmente à profundidade
+	     	  	atual, em seguida +Nome_do_diretorio
+		 	Muda-se para o diretorio em questão e para cada item
+	     	 	neste aplica-se o script recursivamente.
+
+		se arquivo, 
+		   	seta-se CONT com a profundidade atual ( ou zero
+	     	  	se nao setada ainda) e
+		  	imprime-se espaços proporcionalmente à profundidade
+	     	  	atual, em seguida -Nome_do_arquivo
+
+	* Obs.: O programa nao funciona bem para diretorios com
+          espaços no nome
+
+
+	  5:
+		O programa roda em loop infinito. 
+		o comando trap do script configura uma açao a ser
+		tomana no advento da chegada de um sinal
+		especificado ( No caso, um echo indicando o tipo de
+		sinal recebido, um redirecionamento da saída padrao
+		para a saída padrao de erros, e um comando para
+		terminar o programa), e o código do sinal a esperar.
+
+		Casos específicos:
+		      kill <PID> : Envio do sinal padrao (TERM)
+		      	   'Algum processo enviou um TERM'
+		      kill -2 <PID> : Envio de INT 
+		      	   'Algum processo enviou um INT'
+		      kill -15 <PID> : Envio de TERM
+		      	   'Algum processo enviou um TERM'
+		      kill -9 <PID> : HEADSHOT
+
+
+		      
+
+
+
+	  6:
+		$0=prog.		Comando enviado
+		$2=carro. 	Segundo argumento posicional (fora $0)
+		$4=rua.		Quarto argumento posicional (fora $0)
+		$8=		        Oitavo argumento posicional inexistente 
+		$$=9052		$$ indica o pid do processo
+		$#=4		Indica o numero de argumentos 
+		$*=casa carro cachorro rua	Indica todos os
+		argumentos passados
+		$@=casa carro cachorro rua	Idêntico à $*
+
+	7:
+		caso 1:
+		     $1, $2, $3, $4 começam com string nula. (logo,
+		     testes sao todos falsos e param1~4 nao setados)
+		     	    	      	       		    
+						  ---1----   ---2---
+		     Referências: echo "n:${a x b}:"; echo $a
+		     n=1) valor assumido em (1) é abacaxi, mas 'a' nao é
+		     setada, logo em (2) ainda é vazia
+
+		     n=2) valor assumido em (1) é laranja e 'a' É
+		     setada. Logo, em (2) imprime-se laranja
+
+		     n=3) Como 'a' nao foi setada, nada é executado
+		     nas chaves.'a' continua vazia em (2).
+		     
+		     n=4)Como 'a' nao foi setada, a msg de erro
+		     "QuartaVariavelNaoInicializada é impressa. (2)
+		     nao imprime nada
+
+
+		 caso 2:
+		      $1, $2, $3, $4 começam com as strings casa carro
+		      cachorro rua. (logo, testes sao todos verdadeiros e param1~4 sao
+		      setados com tais strings)
+
+		      				   ---1----   ---2---
+		     Referências: echo "n:${a x b}:"; echo $a
+		     n=1) Variável setada. Comportamento
+		     padrao. imprime-se 'a' em (1) e (2)
+
+		     n=2) Variável setada. Comportamento
+		     padrao. imprime-se 'a' em (1) e (2)
+
+		     n=3) Como 'a' foi setada, executa-se "melancia"
+		     (impresso em (1) por estar dentro de um echo). 'a' impressa em (2).
+		     
+		     n=4)Como 'a' foi setada,não ha msg de
+		     erro. Imprime-se 'a' em (1) e em (2).
+
+		 8:
+			1) testa existenca do diretorio lixo em
+			Home. Caso negativo, crie-o
+
+			2) Teste a existencia de parametros. Caso
+			zero, termine o programa
+
+			3) case para o parametro $1:
+			   	i)   caso -l, liste conteúdo de $HOME/lixo
+			  	ii)  caso -r, entre em um case sobre o
+			   	numero de argumentos:
+				       a) caso 1:
+				       	       salve o diretorio atual
+					       mude para $HOME/lixo
+					       apague tudo (sem perguntar, diretorios inclusos)
+		  			       retorne ao diretorio anterior
+				       b) caso outro, imprima mensagem
+			   	       de erro
+	  
+				iii) Caso outro, itere sobre os parametros:
+				     teste se o parametro corresponde a um arquivo. se sim, mova-o 
+				     para a lixeira. senao, imprima mensagem de erro
+
+		 Objetivo: Criar uma lixeira à la windows, tornando a exclusao de arquivos mais segura.
+
+
+	     
+
+
+
+
+
+
+
+
+
+http://www.gnu.org/software/bash/manual/bashref.html
+
+! => Histórico
+		
+
+
+
+
+
+
+
+
+	
+
+      
+      
+

@@ -1,0 +1,17 @@
+find $var -name "*[^\.|ha|refre|pu]sh" 2>/dev/null
+/usr/bin/instmodsh
+/usr/bin/ssh
+/usr/bin/tclsh
+/usr/bin/wish
+/bin/csh
+/bin/ksh
+/bin/tcsh
+/bin/zsh
+/usr/bin/instmodsh
+/usr/bin/ssh
+/usr/bin/tclsh
+/usr/bin/wish
+/bin/csh
+/bin/ksh
+/bin/tcsh
+/bin/zsh
