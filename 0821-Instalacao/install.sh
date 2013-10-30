@@ -1,29 +1,55 @@
 #!/bin/sh
 
-cd ~
+cd /tmp
 
-echo "Install Ubuntu iMX"
-
-echo "Press any key"
-read -n 1 -s
-
-if test -f "ubuntu-13.04-minimal-"
-    then
-    echo "Arquivo Presente"
-else
-    wget -c http://rcn-ee.net/deb/minfs/raring/ubuntu-13.04-minimal-armhf-2013-05-05.tar.gz
-fi
+echo "Setup SD CARD"
 
 echo "Press any key"
 read -n 1 -s
 
-md5sum ubuntu-13.04-minimal-armhf-2013-05-05.tar.xz 952cf1f87c047653fb0f24818c8bfd26 ubuntu-13.04-minimal-armhf-2013-05-05.tar.xz
+echo "Unidade do cartao?"
+read DISK 
+#/dev/sdb? /dev/sdb0
 
+echo "OK!"
+echo "Apagar Cartao"
 echo "Press any key"
 read -n 1 -s
 
-tar xJf ubuntu-13.04-minimal-armhf-2013-05-05.tar.xz
+dd if=/dev/zero of="$DISK" bs=1M count=16
 
+echo "OK!"
+echo "Instalar BootLoader"
 echo "Press any key"
 read -n 1 -s
+
+dd if=./u-boot/u-boot.imx of="${DISK}" bs=512 seek=2
+
+
+echo "OK!"
+echo "Criar Particoes"
+echo "Press any key"
+read -n 1 -s
+
+sfdisk --in-order --Linux --unit M "$DISK" <<-__EOF__
+       1,48,0x83,*
+       ,,,-
+       __EOF__
+
+
+echo "OK!"
+echo "Criar Particoes"
+echo "Press any key"
+read -n 1 -s
+
+sudo mkfs.ext2 "$DISK1" -L boot
+sudo mkfs.ext4 "$DISK2" -L rootfs
+
+echo "OK! -  Retire e insira o Cartao p/ Monta-lo"
+echo "Press any key"
+read -n 1 -s
+
+
+
+
 
